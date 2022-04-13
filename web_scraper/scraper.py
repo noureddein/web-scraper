@@ -34,41 +34,42 @@ def get_paragraphs_citation_needed(paragraphs):
         has_citation = paragraph.find(
             'sup', class_='noprint Inline-Template Template-Fact')
         if has_citation:
-            section = has_citation.find_previous_sibling(
-                "span")
-            print('Section', section)
             paragraphs_need_citations.append(paragraph.get_text())
 
     return paragraphs_need_citations
 
 
-def get_citations_needed_count(URL):
+def get_citations_needed_list():
     page_content = get_site_data(URL)
     all_paragraphs = get_paragraphs(page_content)
     citations_needed = get_paragraphs_citation_needed(all_paragraphs)
+    return citations_needed
+
+
+def get_citations_needed_count(URL):
+    citations_needed = get_citations_needed_list()
 
     return len(citations_needed)
 
 
 def get_citations_needed_report(URL):
-    page_content = get_site_data(URL)
-    all_paragraphs = get_paragraphs(page_content)
-    citations_needed = get_paragraphs_citation_needed(all_paragraphs)
-
+    citations_needed = get_citations_needed_list()
     output = ''
     for paragraph in citations_needed:
         output += f'{paragraph}\n'
-    print(output)
+
+    return output
 
 
 get_citations_needed_report(URL)
 
-#! (\.\s\w+)\[((\w+).(\w+))\](\w+\.\s)
+# #! (\.\s\w+)\[((\w+).(\w+))\](\w+\.\s)
 
 # site_data = get_site_data(URL)
 
 # soup = BeautifulSoup(site_data, 'html.parser')
 
-# h2_p = soup.find_all(['h2', 'p'])
+# h2_p = soup.find('div', id='mw-content-text')
+# print(h2_p)
 # with open('test.html', 'w') as f:
 #     f.write(str(h2_p))

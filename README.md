@@ -17,4 +17,4 @@
     - the string should be formatted with each citation needed on own line, in order found.
 
 ## Pull Request
-  - [PR]()
+  - [PR](https://github.com/noureddein/web-scraper/pull/1)
